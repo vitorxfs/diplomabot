@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"encoding/json"
@@ -115,8 +115,8 @@ func getSTGBodyXML() ([]byte, error) {
 	return io.ReadAll(res.Body)
 }
 
-func main() {
-	godotenv.Load()
+func Handler(w http.ResponseWriter, r *http.Request) {
+  godotenv.Load()
 
 	fmt.Println("Starting...")
 
