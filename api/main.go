@@ -70,7 +70,8 @@ func readPdfFromUrl(pdfUrl string) (string, error) {
   defer res.Body.Close()
   if (error != nil) { return "", error }
 
-  body, _ := io.ReadAll(res.Body);
+  body, error := io.ReadAll(res.Body);
+  if (error != nil) { return "", error }
 
   var pdfParseResponse PdfParseResponse;
   error = json.Unmarshal(body, &pdfParseResponse)
@@ -115,8 +116,8 @@ func getSTGBodyXML() ([]byte, error) {
   return io.ReadAll(res.Body)
 }
 
-func Handler(w http.ResponseWriter, r *http.Request) {
-  godotenv.Load()
+func Main() {
+  godotenv.Load("./.env")
 
   fmt.Println("Starting...")
 
@@ -142,4 +143,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
   if error != nil { panic(error) }
 
   return;
+}
+
+func Handler(w http.ResponseWriter, r *http.Request) {
+  Main()
 }
